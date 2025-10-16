@@ -23,4 +23,6 @@ target_link_libraries(CalDAVEventFeederFactory PRIVATE
   Qt6::Quick
   Qt6::Widgets
   Qt6::Xml
-  QtWebDAV)
+  QtWebDAV
+  libical::libical
+  )

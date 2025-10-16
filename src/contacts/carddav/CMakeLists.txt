@@ -28,4 +28,5 @@ target_link_libraries(CardDAVAddressBookFactory PRIVATE
   Qt6::Widgets
   QtWebDAV
   vCard
-  Qt6::Xml)
+  Qt6::Xml
+  openldap::openldap)

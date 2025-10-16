@@ -22,4 +22,6 @@ target_link_libraries(LDAPAddressBookFactory PRIVATE
   Qt6::Core
   Qt6::Gui
   Qt6::Quick
-  Qt6::Widgets)
+  Qt6::Widgets
+  openldap::openldap
+  )
