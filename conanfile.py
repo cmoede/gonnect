@@ -84,17 +84,20 @@ class GOnnectRecipe(ConanFile):
             self.tool_requires("pkgconf/2.0.3")
 
     def config_options(self):
-        self.options["pjproject/*"].shared=True
-        self.options["openldap/*"].with_cyrus_sasl=False
-        self.options["openldap/*"].shared=True
-        self.options["openssl/*"].shared=True
-        self.options["sqlite3/*"].shared=True
-        self.options["nss/*"].shared=True
-        self.options["nspr/*"].shared=True
-        self.options["harfbuzz/*"].with_subset=True
-        self.options["qtwebdav/*"].shared=True
-        self.options["qtkeychain/*"].shared=True
-        self.options["qca/*"].shared=True
+        useShardLibs = self.settings.os != "Windows"
+
+        self.options["pjproject/*"].shared=useShardLibs
+        self.options["pjproject/*"].with_uuid=False
+        self.options["openssl/*"].shared=useShardLibs
+        self.options["openssl/*"].no_apps=True
+        self.options["sqlite3/*"].shared=useShardLibs
+        self.options["nss/*"].shared=useShardLibs
+        self.options["nspr/*"].shared=useShardLibs
+        self.options["harfbuzz/*"].with_subset=False
+        self.options["qtwebdav/*"].shared=useShardLibs
+        self.options["qtkeychain/*"].shared=useShardLibs
+        self.options["qca/*"].shared=useShardLibs
+        self.options["vcard/*"].shared=useShardLibs
 
         if self.options.with_conan_qt:
             self.options["*/*"].with_conan_qt=True
