@@ -50,4 +50,4 @@ class OpenLDAP(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.libs = [""]
+        self.cpp_info.libs = ["ldap", "lber"]
