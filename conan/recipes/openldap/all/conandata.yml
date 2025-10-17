@@ -1,4 +1,7 @@
 sources:
-  "1.0.0":
-    url: "https://github.com/cmoede/openldap/archive/refs/heads/cmake.zip"
-    sha256: "4b803a879d6bd7d9c37706a86cb04c2c1182f4b62798a5ec1b5cb4609f383cfb"
+  "2.6.10":
+    url: "https://github.com/openldap/openldap/archive/refs/tags/OPENLDAP_REL_ENG_2_6_10.zip"
+    sha256: "bf0134251cdff4dfc072756e682bc17ff344c6b9cca9ca790ab4db8e6c827e27"
+patches:
+  "2.6.10":
+    - patch_file: "patches/0001-Support-CMake-build-with-Visual-Studio.patch"
