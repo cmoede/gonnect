@@ -27,6 +27,7 @@ if(UNIX)
     pkg_check_modules(LIBHIDAPI REQUIRED hidapi-hidraw IMPORTED_TARGET)
     pkg_check_modules(LIBICAL REQUIRED libical IMPORTED_TARGET)
 
+    find_package(Qca-qt6 REQUIRED)
     list(APPEND PLATFORM_LIBRARIES
         PkgConfig::OPENLDAP
         PkgConfig::SASL2
@@ -34,26 +35,28 @@ if(UNIX)
         PkgConfig::LIBUSB1
         PkgConfig::LIBHIDAPI
         PkgConfig::LIBICAL
-        PkgConfig::PJSIP)
+        PkgConfig::PJSIP
+        qca-qt6)
 else()
     find_package(hidapi REQUIRED)
     find_package(libusb REQUIRED)
     find_package(pjproject REQUIRED)
     find_package(libical REQUIRED)
-    find_package(vcard REQUIRED)
-    find_package(qtwebdav REQUIRED)
-    find_package(qtkeychain REQUIRED)
+    find_package(vCard REQUIRED)
+    find_package(QtWebDAV REQUIRED)
+    find_package(Qt6Keychain REQUIRED)
     find_package(openldap REQUIRED)
 
     list(APPEND PLATFORM_LIBRARIES
         hidapi::hidapi
         pjproject::pjproject
         libical::libical
-        vcard::vcard
-        qtwebdav::qtwebdav
-        qtkeychain::qtkeychain
+        vCard
+        QtWebDAV
+        qt6keychain
         libusb::libusb
-        openldap::openldap)
+        openldap::openldap
+        )
 endif()
 
 if(LINUX)
@@ -143,9 +146,13 @@ set_source_files_properties(${gonnect_qml_singletons} PROPERTIES QT_QML_SINGLETO
 add_subdirectory(contacts/ldap)
 add_subdirectory(contacts/carddav)
 add_subdirectory(contacts/csv)
-add_subdirectory(contacts/eds)
 add_subdirectory(calendar/caldav)
+
+if(LINUX)
+add_subdirectory(contacts/eds)
 add_subdirectory(calendar/eds)
+endif()
+
 
 # Disabled, because akonadi doesn't provide a reliable way to be used
 # within flatpaks.
@@ -153,7 +160,6 @@ add_subdirectory(calendar/eds)
 #add_subdirectory(calendar/akonadi)
 
 find_package(vCard REQUIRED)
-find_package(Qca-qt6 REQUIRED)
 find_package(Qt6Keychain REQUIRED)
 
 set_source_files_properties(ui/scripts/util.js PROPERTIES QT_QML_SOURCE_TYPENAME Util)
@@ -665,8 +671,7 @@ target_link_libraries(gonnect
         Qt6::WebEngineQuick
         Qt6::Core5Compat
         ${PLATFORM_LIBRARIES}
-        GOnnectVersion
-        qca-qt6
+        GOnnectVersion        
         qt6keychain
         hid-rp
         Qt6::Xml
