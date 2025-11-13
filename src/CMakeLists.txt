@@ -651,7 +651,8 @@ target_link_libraries(gonnect
         LDAPAddressBookFactory
         CardDAVAddressBookFactory
         CSVAddressBookFactory
-        CalDAVEventFeederFactory        
+        CalDAVEventFeederFactory
+        MSGraphAddressBookFactory
         ${EDS_ADDRESSBOOK_LIBRARIES}
         ${EDS_CALENDAR_LIBRARIES}
         ${LDAP_ADDRESSBOOK_LIBRARIES}
