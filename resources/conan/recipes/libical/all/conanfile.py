@@ -68,3 +68,5 @@ class LibICALConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = ["ical"]
+        if not self.options.shared:
+            self.cpp_info.defines = ['LIBICAL_ICAL_STATIC_DEFINE', 'LIBICAL_ICALSS_STATIC_DEFINE', 'LIBICAL_VCAL_STATIC_DEFINE']
