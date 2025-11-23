@@ -1,0 +1,3 @@
+message("Running windeployqt")
+execute_process(COMMAND "@windeployqt_exe@" --release --qmldir @CMAKE_CURRENT_LIST_DIR@/src gonnect.exe WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/bin")
+

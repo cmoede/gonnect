@@ -76,6 +76,7 @@ add_subdirectory(emoji)
 add_subdirectory(src)
 add_subdirectory(external/hid-rp)
 
+
 if(${BUILD_TESTING})
     add_subdirectory(tests)
     add_definitions(-DAPP_TESTS)
@@ -89,4 +90,25 @@ if(LINUX)
     install(FILES resources/flatpak/de.gonicus.gonnect.releases.xml DESTINATION share/metainfo/releases)
     install(FILES resources/flatpak/de.gonicus.gonnect.service DESTINATION share/dbus-1/services)
     install(FILES resources/flatpak/de.gonicus.gonnect.search-provider.ini DESTINATION share/gnome-shell/search-providers)
+endif()
+
+if(WIN32)
+    set(CPACK_GENERATOR "NSIS")
+    set(CPACK_PACKAGE_VENDOR "Gonicus")
+    set(CPACK_PACKAGE_NAME "GOnnect")
+    set(CPACK_PACKAGE_DESCRIPTION "GOnnect a modern, easy to use UC client.")
+    set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_LIST_DIR}/resources/artwork/gonnect.ico")
+    set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_LIST_DIR}/resources/artwork/gonnect.ico")
+    set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_LIST_DIR}/LICENSE")
+    #set(CPACK_NSIS_COMPRESSOR ZLIB) # use this to speed up test builds
+    set(CPACK_PACKAGE_EXECUTABLES "gonnect" "GOnnect")
+
+    find_program(windeployqt_exe windeployqt REQUIRED)
+    configure_file(cmake/windeployqt.cmake.in ${CMAKE_BINARY_DIR}/windeployqt.cmake @ONLY)
+    install(TARGETS gonnect RUNTIME DESTINATION .)
+    install(SCRIPT ${CMAKE_BINARY_DIR}/windeployqt.cmake)
+
+    set(CPACK_PROJECT_NAME gonnect)
+    set(CPACK_PROJECT_VERSION 123)
+    include(CPack)
 endif()
